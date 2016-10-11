@@ -47,8 +47,8 @@ public class DaintyAnnotatedField {
         }
 
         mFieldElement = (VariableElement) element;
-        DaintyField bindView = mFieldElement.getAnnotation(DaintyField.class);
-        annotationName = bindView.fieldName();
+        DaintyField mDaintyField = mFieldElement.getAnnotation(DaintyField.class);
+        annotationName = mDaintyField.fieldName();
 
     }
 

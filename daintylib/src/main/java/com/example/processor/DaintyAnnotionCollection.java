@@ -13,19 +13,25 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 
 public class DaintyAnnotionCollection {
+
+    public static final String INPUT_TYPE = "inputType";
     private String transTarget;
     private List<DaintyAnnotatedField> fieldList = new ArrayList<>();
     public TypeElement mClassElement;
     public Elements mElementUtils;
-    public DaintyAnnotatedClass mDaintyAnnotatedClass;
+//    public DaintyAnnotatedClass mDaintyAnnotatedClass;
     public TypeElement mTypeElement;
+    private String annotatedClassFullName;
+
+    public void setAnnotatedClassFullName(String annotatedClassFullName) {
+        this.annotatedClassFullName = annotatedClassFullName;
+    }
+
+
 
     public DaintyAnnotionCollection(TypeElement classElement, Elements elementUtils) {
         this.mClassElement = classElement;
         this.mElementUtils = elementUtils;
-    }
-
-    public DaintyAnnotionCollection() {
     }
 
     public String getTransTarget() {
@@ -40,10 +46,6 @@ public class DaintyAnnotionCollection {
         return fieldList;
     }
 
-    public void setFieldList(List<DaintyAnnotatedField> fieldList) {
-        this.fieldList = fieldList;
-    }
-
     public void addField(DaintyAnnotatedField field) {
         fieldList.add(field);
     }
@@ -51,23 +53,23 @@ public class DaintyAnnotionCollection {
     public JavaFile genCode() {
 
 
-        TypeElement superClassName = mElementUtils.getTypeElement(transTarget);
+//        TypeElement superClassName = mElementUtils.getTypeElement(transTarget);
 //        PackageElement pkg = mElementUtils.getPackageOf(superClassName);
 
         MethodSpec main = null;
 
 
-        MethodSpec.Builder transMethodBuilder = MethodSpec.methodBuilder("transCat2Dog")
+        MethodSpec.Builder transMethodBuilder = MethodSpec.methodBuilder("transMethod")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.OBJECT)
-                .addParameter(TypeName.get(mTypeElement.asType()), "cat")
-                .addStatement(mDaintyAnnotatedClass.getQualifiedFactoryGroupName() + " newdog = new " + mDaintyAnnotatedClass.getQualifiedFactoryGroupName() + "()");
+                .addParameter(TypeName.get(mTypeElement.asType()), INPUT_TYPE)
+                .addStatement(annotatedClassFullName + " newdog = new " + annotatedClassFullName + "()");
 
 //                .addStatement("newdog.dongName = \"www\"");
 //                    .addStatement("$T.out.println($S)", System.class, ""+ annotatedField.getName())
 
         for (DaintyAnnotatedField daintyAnnotatedField : fieldList) {
-            transMethodBuilder.addStatement("newdog."+daintyAnnotatedField.getAnnotationName()+" = " + "cat."+daintyAnnotatedField.getFieldName());
+            transMethodBuilder.addStatement("newdog."+daintyAnnotatedField.getAnnotationName()+" = " + INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName());
             transMethodBuilder.addStatement("$T.out.println($S)", System.class, "" + daintyAnnotatedField.getFieldName()+ "  "+ daintyAnnotatedField.getAnnotationName());
         }
 
