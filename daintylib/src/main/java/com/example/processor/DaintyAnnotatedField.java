@@ -3,7 +3,6 @@ package com.example.processor;
 import com.example.DaintyField;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
@@ -41,11 +40,6 @@ public class DaintyAnnotatedField {
     private VariableElement mFieldElement;
 
     public DaintyAnnotatedField(Element element) throws IllegalArgumentException {
-        if (element.getKind() != ElementKind.FIELD) {
-            throw new IllegalArgumentException(
-                    String.format("Only fields can be annotated with @%s", DaintyField.class.getSimpleName()));
-        }
-
         mFieldElement = (VariableElement) element;
         DaintyField mDaintyField = mFieldElement.getAnnotation(DaintyField.class);
         annotationName = mDaintyField.fieldName();
