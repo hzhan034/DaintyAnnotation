@@ -1,0 +1,3 @@
+# DaintyAnnotation
+
+annotation processor demo
