@@ -3,19 +3,21 @@ package com.hugo.daintyannotation;
 import com.example.DaintyClass;
 import com.example.DaintyField;
 
-@DaintyClass(type = Dog.class, id = "cat")
-public class Cat {
+/**
+ * Created by hugo on 2016/10/12.
+ */
+@DaintyClass(type = Dog.class, id = "fish")
+public class Fish {
 
     @DaintyField(fieldName = "dogName")
-    public String catName;
+    public String fishName;
 
     @DaintyField(fieldName = "dogId")
-    public String catId;
+    public String fishId;
 
     @DaintyField(fieldName = "dogAge")
-    public int catAge;
+    public int fishAge;
 
     @DaintyField(fieldName = "canTrans")
     public boolean canTrans;
-
 }

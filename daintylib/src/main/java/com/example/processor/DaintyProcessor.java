@@ -141,7 +141,7 @@ public class DaintyProcessor extends AbstractProcessor {
             error(element, e.getMessage());
         }
 
-        String annotatedFullClassName = annotatedClass.getQualifiedFactoryGroupName().toString();
+        String fullClassNameInAnnotaion = annotatedClass.getQualifiedFactoryGroupName().toString();
         DaintyAnnotionCollection mDaintyAnnotionCollection = daintyAnnotionColectionMap.get(TypeName.get(element.asType()).toString());
         if (mDaintyAnnotionCollection == null) {
             //TODO
@@ -149,7 +149,7 @@ public class DaintyProcessor extends AbstractProcessor {
             System.out.println("mDaintyAnnotionCollection is null" + TypeName.get(element.asType()).toString());
             //            mDaintyAnnotionCollection  = new DaintyAnnotionCollection();
         }
-        mDaintyAnnotionCollection.setAnnotatedClassFullName(annotatedFullClassName);
+        mDaintyAnnotionCollection.setAnnotatedClassFullName(fullClassNameInAnnotaion);
         mDaintyAnnotionCollection.mTypeElement = element;
         mDaintyAnnotionCollection.setTransTarget(TypeName.get(element.asType()).toString());
         return mDaintyAnnotionCollection;

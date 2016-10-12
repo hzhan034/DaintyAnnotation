@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD})
 public @interface DaintyField {
     String fieldName() default "";
+    int fieldId() default 0;
 }

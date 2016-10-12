@@ -59,7 +59,7 @@ public class DaintyAnnotionCollection {
         MethodSpec main = null;
 
 
-        MethodSpec.Builder transMethodBuilder = MethodSpec.methodBuilder("transMethod")
+        MethodSpec.Builder transMethodBuilder = MethodSpec.methodBuilder("transMethod_" + TypeName.get(mTypeElement.asType()).toString())
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.OBJECT)
                 .addParameter(TypeName.get(mTypeElement.asType()), INPUT_TYPE)
@@ -69,8 +69,16 @@ public class DaintyAnnotionCollection {
 //                    .addStatement("$T.out.println($S)", System.class, ""+ annotatedField.getName())
 
         for (DaintyAnnotatedField daintyAnnotatedField : fieldList) {
-            transMethodBuilder.addStatement("newdog."+daintyAnnotatedField.getAnnotationName()+" = " + INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName());
-            transMethodBuilder.addStatement("$T.out.println($S)", System.class, "" + daintyAnnotatedField.getFieldName()+ "  "+ daintyAnnotatedField.getAnnotationName());
+            if (TypeName.get(daintyAnnotatedField.getFieldType()).toString().equals("java.lang.String")){
+                transMethodBuilder.beginControlFlow("if("+ INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName() + " != null)")
+                        .addStatement("newdog."+daintyAnnotatedField.getAnnotationName()+" = " + INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName())
+                        .endControlFlow();
+            }else if(TypeName.get(daintyAnnotatedField.getFieldType()).toString().equals("int")){
+                transMethodBuilder.beginControlFlow("if("+ INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName() + " != 0)")
+                        .addStatement("newdog."+daintyAnnotatedField.getAnnotationName()+" = " + INPUT_TYPE +"."+ daintyAnnotatedField.getFieldName())
+                        .endControlFlow();
+            }
+//            transMethodBuilder.addStatement("$T.out.println($S)", System.class, "" + daintyAnnotatedField.getFieldName()+ "  "+ daintyAnnotatedField.getAnnotationName());
         }
 
 
