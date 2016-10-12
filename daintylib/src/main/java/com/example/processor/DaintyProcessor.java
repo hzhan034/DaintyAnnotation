@@ -5,7 +5,6 @@ import com.example.DaintyField;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.TypeName;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -59,13 +58,9 @@ public class DaintyProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         boolean result = false;
         result = (processField(roundEnv) && processClass(roundEnv));
-
-        try {
-            if(result){mDaintyAnnotionCollection.genCode().writeTo(processingEnv.getFiler());
+            if (result) {
+                new DaintyCodeGenerator(daintyAnnotionColectionMap , filer).genCode();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         return result;
     }
